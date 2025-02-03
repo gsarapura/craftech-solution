@@ -17,9 +17,12 @@ una PC local como en la nube (AWS o GCP).
 
 
 ## Frontend
-- Node version: using latest stable
+- Node version: using latest stable - 22.13.1
 ```sh
 # Build
 IMAGE_NAME=craftech-frontend:latest
 docker build -t $IMAGE_NAME -f docker/Dockerfile .
+# Run
+docker run -it --rm -p 80:80 $IMAGE_NAME sh
+docker run --rm -p 80:80 $IMAGE_NAME
 ```
