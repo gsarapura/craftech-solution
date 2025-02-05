@@ -5,6 +5,8 @@ on:
     paths:
       - 3_ci_cd/**
     branches: [ main ]
+  
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   deploy:
