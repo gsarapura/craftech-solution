@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 3_ci_cd/**
-    branches: [ three-ci-cd ]
+    branches: [ main ]
 
 jobs:
   deploy:

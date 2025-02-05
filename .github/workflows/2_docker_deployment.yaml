@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 2_docker_deployment/**
-    branches: [ three-ci-cd ]
+    branches: [ main ]
 
 jobs:
   deploy:
