@@ -22,7 +22,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: 3_ci_cd/
           push: true
           tags: gsarapura/craftech-technical-solution:3_ci_cd
 
