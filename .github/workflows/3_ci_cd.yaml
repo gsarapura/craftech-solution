@@ -3,7 +3,7 @@ name: Docker Deployment
 on:
   push:
     paths:
-      - 3_ci_cd/**
+      - 3_ci_cd/index.html
     branches: [ main ]
   
   workflow_dispatch: # Allows manual triggering of the workflow
