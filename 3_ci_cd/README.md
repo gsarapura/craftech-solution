@@ -8,7 +8,8 @@ Para la creacion del CI/CD se puede utilizar cualquier plataforma (CircleCI, Git
 - Using latest stable https://nginx.org/en/download.html: currently 1.27.3
 - 
 ```sh
+# Locally
 IMAGE_TAG_NAME="gsarapura/craftech-technical-solution:3_ci_cd"
 docker build -t $IMAGE_TAG_NAME .
-docker push $IMAGE_TAG_NAME
+docker run --rm -p 8080:80 $IMAGE_TAG_NAME
 ```
