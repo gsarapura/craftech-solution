@@ -10,8 +10,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - craftech_network 
 
 volumes:
   postgres_data:
   static:
   media:
+
+networks:
+  craftech_network:
+    external: true
