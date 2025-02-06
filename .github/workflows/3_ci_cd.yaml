@@ -27,8 +27,3 @@ jobs:
           context: 3_ci_cd/
           push: true
           tags: gsarapura/craftech-technical-solution:3_ci_cd
-
-      - name: Deploy App
-        run: |
-          echo "Running 3_ci_cd.yaml"
-          # Your deployment commands for App
