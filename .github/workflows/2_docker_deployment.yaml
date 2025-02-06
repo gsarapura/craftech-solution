@@ -5,6 +5,8 @@ on:
     paths:
       - 2_docker_deployment/backend/**
       - 2_docker_deployment/frontend/**
+      - 2_docker_deployment/docker-compose.yaml
+      - 2_docker_deployment/init_docker_compose.bash
     branches: [ main ]
 
 jobs:
@@ -35,3 +37,26 @@ jobs:
           file: 2_docker_deployment/frontend/docker/Dockerfile
           push: true
           tags: gsarapura/craftech-2-docker-deployment-frontend:latest
+        
+      # Step to upload necessary files to the server
+      - name: Upload docker-compose.yaml and init_docker_compose.bash to server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "2_docker_deployment/docker-compose.yaml,2_docker_deployment/init_docker_compose.bash"
+          target: "/home/ubuntu"
+
+      # Step to run the init_docker_compose.bash script on the server
+      - name: Run init_docker_compose.bash script on the server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            chmod +x  /home/ubuntu/init_docker_compose.bash
+            /home/ubuntu/init_docker_compose.bash
