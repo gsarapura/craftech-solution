@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    restart: always
+    container_name: backend
+    env_file: ./backend/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - craftech_network 
+    depends_on:
+      - frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+    restart: always
+    container_name: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - craftech_network
+
+networks:
+  craftech_network:
+    external: true
+

@@ -1,0 +1,25 @@
+services:
+  backend:
+    container_name: backend
+    image: gsarapura/craftech-2-docker-deployment-backend:latest
+    restart: always
+    env_file: ./backend/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - craftech_network 
+    depends_on:
+      - frontend
+  frontend:
+    container_name: frontend
+    image: gsarapura/craftech-2-docker-deployment-frontend:latest
+    restart: always
+    ports:
+      - "3000:80"
+    networks:
+      - craftech_network
+
+networks:
+  craftech_network:
+    external: true
+
