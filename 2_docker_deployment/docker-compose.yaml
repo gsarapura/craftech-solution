@@ -3,7 +3,7 @@ services:
     container_name: backend
     image: gsarapura/craftech-2-docker-deployment-backend:latest
     restart: always
-    env_file: ./backend/.env
+    env_file: .env
     ports:
       - "8000:8000"
     networks:

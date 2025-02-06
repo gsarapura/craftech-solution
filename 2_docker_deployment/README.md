@@ -18,6 +18,7 @@ una PC local como en la nube (AWS o GCP).
 ## Overview
 The following solution will have in mind that both Frontend and Backend will be into one docker-compose.yaml. 
 Database will be external to both of them, that is, DB won't be part of the docker-compose.yaml
+Also, there are two docker compose, one for local development, and another that will be used in the deployed service.
 
 ## Backend
 * Python version: tried to use python 3.13 but when building it causes lots of dependencies issues. Instead, using 3.11.
@@ -88,8 +89,22 @@ docker compose -f docker-compose-local.yaml up --build
 
 # Deploy to EC2
 - Running Ubuntu, Docker has been installed following [official documentation](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
+- Installed [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- EC2 instance must have permission to retrieve secrets
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "secretsmanager:GetSecretValue",
+      "Resource": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:NAME-*" 
+    }
+  ]
+}
 
--
+```
+- The following steps are already automated by `.github/workflows/2_docker_deployment.yaml`:
 ```sh
 $DOCKER_USERNAME="gsarapura"
 
@@ -104,3 +119,4 @@ IMAGE_TAG_NAME="gsarapura/craftech-2-docker-deployment-backend:latest"
 docker build -t $IMAGE_TAG_NAME -f docker/Dockerfile .
 docker push $IMAGE_TAG_NAME
 ```
+- In `init_docker_compose.bash`, docker compose is set up and started.
