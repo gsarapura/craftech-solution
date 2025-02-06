@@ -11,19 +11,6 @@ services:
     ports:
       - 5432:5432
 
-  # backend:
-  #   container_name: backend
-  #   build: 
-  #     context: .  # Root directory for the build context
-  #     dockerfile: docker/Dockerfile 
-  #   env_file: ./.env # Environment variables for your backend service
-  #   # volumes:
-  #   #   - ./path-to-your-backend:/app  # Mount your backend code if needed
-  #   depends_on:
-  #     - db  # Ensure that the db service is started before the backend
-  #   ports:
-  #     - 8000:8000  # Expose your backend port (adjust as needed)
-
 volumes:
   postgres_data:
   static:
