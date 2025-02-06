@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: 2_docker_deployment/frontend
-          file: 2_docker_deployment/backend/frontend/Dockerfile
+          file: 2_docker_deployment/frontend/docker/Dockerfile
           push: true
           tags: gsarapura/craftech-2-docker-deployment-frontend:latest
