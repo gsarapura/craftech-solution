@@ -18,6 +18,7 @@ una PC local como en la nube (AWS o GCP).
 
 ## Frontend
 - Node version: using latest stable - 22.13.1
+- Optimised Docker image
 ```sh
 # Build
 IMAGE_NAME=craftech-frontend:latest
@@ -25,4 +26,18 @@ docker build -t $IMAGE_NAME -f docker/Dockerfile .
 # Run
 docker run -it --rm -p 80:80 $IMAGE_NAME sh
 docker run --rm -p 80:80 $IMAGE_NAME
+```
+
+## Backend
+- Python version: tried to use python 3.13 but when building it causes lots of dependncies issues. Instead, using 3.12
+- Optimised Docker image
+```sh
+IMAGE_NAME=craftech-backend:latest
+cd docker/
+docker build -t $IMAGE_NAME -f Dockerfile .
+# Run
+docker run -it --rm -p 8000:8000 -e SQL_DATABASE=core $IMAGE_NAME sh
+docker run -it --rm -p 8000:8000  $IMAGE_NAME sh
+docker run --rm -p 8000:8000 -e SQL_DATABASE=core $IMAGE_NAME
+docker run --rm $IMAGE_NAME
 ```
