@@ -120,3 +120,4 @@ docker build -t $IMAGE_TAG_NAME -f docker/Dockerfile .
 docker push $IMAGE_TAG_NAME
 ```
 - In `init_docker_compose.bash`, docker compose is set up and started.
+- Getting CORS error in EC2 instance, but working locally.
