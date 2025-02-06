@@ -9,6 +9,8 @@ on:
       - 2_docker_deployment/init_docker_compose.bash
     branches: [ main ]
 
+  workflow_dispatch: # Allows manual triggering of the workflow
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
