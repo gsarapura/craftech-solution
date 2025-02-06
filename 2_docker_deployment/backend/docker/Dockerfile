@@ -5,7 +5,8 @@ RUN apk upgrade --no-cache && \
 
 COPY ./requirements.txt ./
 
-RUN pip install -r requirements.txt
+# Due to issues with psycopg2, binary had to be installed
+RUN pip install -r requirements.txt && pip install psycopg2-binary
 
 FROM python:3.11-alpine3.21
 
@@ -24,6 +25,6 @@ WORKDIR $WORKING_FOLDER
 
 COPY --from=build /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY --chown=${NON_ROOT_USER}:${NON_ROOT_USER} ./ ./
-RUN mv .env.postgres .env && chmod +x entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 ENTRYPOINT [ "./entrypoint.sh" ]

@@ -29,8 +29,10 @@ docker run --rm -p 80:80 $IMAGE_NAME
 ```
 
 ## Backend
-- Python version: tried to use python 3.13 but when building it causes lots of dependncies issues. Instead, using 3.12
-- Optimised Docker image
+* Python version: tried to use python 3.13 but when building it causes lots of dependncies issues. Instead, using 3.12
+* Optimised Docker image:
+    - Due to issues with psycopg2, binary had to be installed
+* Run locally:
 ```sh
 IMAGE_NAME=craftech-backend:latest
 cd docker/
