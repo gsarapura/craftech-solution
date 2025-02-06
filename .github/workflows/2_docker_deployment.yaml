@@ -49,7 +49,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "2_docker_deployment/docker-compose.yaml,2_docker_deployment/init_docker_compose.bash"
-          target: "/home/ubuntu"
+          target: "~"
 
       # Step to run the init_docker_compose.bash script on the server
       - name: Run init_docker_compose.bash script on the server
@@ -60,5 +60,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            chmod +x  /home/ubuntu/init_docker_compose.bash
-            /home/ubuntu/init_docker_compose.bash
+            chmod +x  ~/2_docker_deployment/init_docker_compose.bash
+            ~/2_docker_deployment/init_docker_compose.bash
