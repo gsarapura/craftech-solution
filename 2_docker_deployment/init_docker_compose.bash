@@ -7,4 +7,5 @@ aws --region us-east-1 secretsmanager get-secret-value \
 docker network create craftech_network
 docker rm -f backend frontend
 docker compose up -d
+# Remove credentials
 > .env

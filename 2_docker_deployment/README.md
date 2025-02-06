@@ -118,6 +118,8 @@ cd backend/
 IMAGE_TAG_NAME="gsarapura/craftech-2-docker-deployment-backend:latest"
 docker build -t $IMAGE_TAG_NAME -f docker/Dockerfile .
 docker push $IMAGE_TAG_NAME
+
+# Also the load of the script and docker compose yaml into EC2 instance as the execution of the script in charge of setting up and running docker compose.
 ```
-- In `init_docker_compose.bash`, docker compose is set up and started.
-- Getting CORS error in EC2 instance, but working locally.
+- In `init_docker_compose.bash`, docker compose is set up and started. Using AWS cli to retrieve credentials from Secret Manager as removing the content of .env file when docker compose is started.
+- Getting CORS error in EC2 instance, but working locally. This error is caused by missing EC2 host in "CORS_ALLOWED_ORIGINS" list (`backend/core/setting.py`).
