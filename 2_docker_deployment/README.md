@@ -16,31 +16,30 @@ con instrucciones detalladas para compilar y desplegar la aplicación, tanto en
 una PC local como en la nube (AWS o GCP).
 
 ## Overview
-The following solution will have in mind that both Frontend and Backend will be into one docker-compose.yaml. 
-Database will be external to both of them, that is, DB won't be part of the docker-compose.yaml
-Also, there are two docker compose, one for local development, and another that will be used in the deployed service.
+This solution combines both the Frontend and Backend within a single `docker-compose.yaml` file. The database will be external to both services and will not be included in the `docker-compose.yaml`. Additionally, there will be two separate Docker Compose configurations: one for local development and another for the deployment service (EC2).
 
 ## Backend
-* Python version: tried to use python 3.13 but when building it causes lots of dependencies issues. Instead, using 3.11.
-* Optimised Docker image:
-    - Due to issues with psycopg2, psycopg2-binary had to be installed
+* Python version: Attempted to use Python 3.13, but it caused several dependency issues. Instead, Python 3.11 is being used.
+* Optimized Docker image:
+  - Build stage: The first stage (build) installs dependencies, including `psycopg2-binary` due to dependencies issues from psycopg2.
+  - Final stage: The second stage builds the actual runtime environment by copying over the installed dependencies from the build stage and setting up the app for production use.
 
 ## Frontend
-- Node version: using latest stable - 22.13.1
-- Optimised Docker image: `frontend/docker/Dockerfile`
-- Ngnix custom config, so that React handles routing: `frontend/docker/ngnix.conf`
+* Node version: Using the latest stable version, `22.13.1`.
+* Optimized Docker image: `frontend/docker/Dockerfile`
+  - Build stage: The first stage installs dependencies, builds the React app, and prepares the static files.
+  - Final stage: The second stage uses a lightweight Nginx server to serve the built static files, with a custom Nginx configuration to handle React routing.
+* Nginx custom configuration: Configured to allow React to handle routing via `frontend/docker/nginx.conf`.
 
-## Run locally:
+## Build Images:
 ```sh
+$NETWORK_NAME=craftech_network
+docker network create  $NETWORK_NAME
+
 cd backend/
 IMAGE_NAME=craftech-backend:latest
-# cd docker/
-# docker build -t $IMAGE_NAME -f Dockerfile .
 docker build -t $IMAGE_NAME -f docker/Dockerfile .
-docker compose up # Run postgres DB
-docker compose config # Check network name
 # Run
-NETWORK_NAME=""
 docker run --rm -p 8000:8000 --network=$NETWORK_NAME -e SQL_DATABASE="core" -e SQL_USER="user" \
             -e SQL_PASSWORD="password" -e SQL_HOST="db" -e SQL_PORT=5432 $IMAGE_NAME
 
@@ -65,23 +64,22 @@ docker run -it --rm --network=$NETWORK_NAME -p 3000:80 $IMAGE_NAME sh
 - Updated `backend/docker-compose.yaml`to use an external network that can communicate docker-compose containing frontend and backend
 
 ```sh
-docker network create craftech_network
-echo "your-database-password" > ./secrets/sql_password.txt
-echo "your-database-user" > ./secrets/sql_user.txt
-
+$NETWORK_NAME=craftech_network
+docker network create  $NETWORK_NAME
 
 # Local run
 # Postgres DB
 cd backend/
 docker compose up --build
+
 # Another terminal
-# Frontend/Backend. For backend create .env as:
+cd 2_docker_deployment/
+# Frontend/Backend. For backend create backend/.env as:
 SQL_DATABASE=
 SQL_USER=
 SQL_PASSWORD=
 SQL_HOST=
 SQL_PORT=
-
 cd ../
 docker compose -f docker-compose-local.yaml up --build
 # Access browser at http://www.localhost:3000
