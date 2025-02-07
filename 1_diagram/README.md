@@ -20,7 +20,7 @@ Ensuring HA means ensuring that a system continues functioning despite of compon
 
 ### Frontend
 
-The frontend of the application is developed in JavaScript, utilizing a modern framework such as React or Angular. This frontend is deployed on Amazon S3 as a static website, allowing for fast and efficient access for end users. To manage traffic and improve user experience, I employ Amazon CloudFront as a content delivery network (CDN).
+The frontend of the application is developed in JavaScript, utilizing a modern framework such as React or Angular. This frontend is deployed on Amazon S3 as a static website, allowing for fast and efficient access for end users. To manage traffic and improve user experience, I employ Amazon CloudFront as a content delivery network (CDN) that then needs to configured with an external DNS provider, such as Cloudfare. 
 - S3: General purpose - It will be across different AZ.
 
 ### Backend
@@ -53,3 +53,9 @@ This architecture on AWS provides a scalable and resilient approach capable of h
 
 Done with LucidChart - [Link here](https://lucid.app/lucidchart/1c9c4e97-60d3-4fca-93f7-8c783c479064/edit?viewport_loc=-1949%2C-1511%2C4085%2C1760%2C0_0&invitationId=inv_7f08654f-37cd-4f9e-9d4c-f12b2226ee8e)
 
+
+## Extras
+### CI/CD
+- GitHub Action that updates backend image in ECR and restarts ECS service. 
+
+![Image](/1_diagram/PIPELINE_EXAMPLE.png)

@@ -86,9 +86,9 @@ docker compose -f docker-compose-local.yaml up --build
 ```
 
 # Deploy to EC2
-- Running Ubuntu, Docker has been installed following [official documentation](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
-- Installed [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- EC2 instance must have permission to retrieve secrets
+* Running Ubuntu, Docker has been installed following [official documentation](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
+* Installed [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+* EC2 instance must have permission to retrieve secrets
 ```json
 {
   "Version": "2012-10-17",
@@ -102,7 +102,7 @@ docker compose -f docker-compose-local.yaml up --build
 }
 
 ```
-- The following steps are already automated by `.github/workflows/2_docker_deployment.yaml`:
+* The following steps are already automated by `.github/workflows/2_docker_deployment.yaml`:
 ```sh
 $DOCKER_USERNAME="gsarapura"
 
@@ -119,5 +119,7 @@ docker push $IMAGE_TAG_NAME
 
 # Also the load of the script and docker compose yaml into EC2 instance as the execution of the script in charge of setting up and running docker compose.
 ```
-- In `init_docker_compose.bash`, docker compose is set up and started. Using AWS cli to retrieve credentials from Secret Manager as removing the content of .env file when docker compose is started.
-- Getting CORS error in EC2 instance, but working locally. This error is caused by missing EC2 host in "CORS_ALLOWED_ORIGINS" list (`backend/core/setting.py`).
+* Frontend Dockerhub: https://hub.docker.com/repository/docker/gsarapura/craftech-2-docker-deployment-frontend/general
+* Backend Dockerhub: https://hub.docker.com/repository/docker/gsarapura/craftech-2-docker-deployment-backend/general
+* In `init_docker_compose.bash`, docker compose is set up and started. Using AWS cli to retrieve credentials from Secret Manager as removing the content of .env file when docker compose is started.
+* Getting CORS error in EC2 instance, but working locally. This error is caused by missing EC2 host in "CORS_ALLOWED_ORIGINS" list (`backend/core/setting.py`).
